@@ -57,14 +57,56 @@ footer{background:#0f1a12;color:#fff;text-align:center;padding:25px}
 .activity-card img{height:220px}
 .activity-meta{color:#526255;font-size:.88rem;margin-top:8px}
 .activity-category{color:var(--green);font-weight:600;font-size:.78rem;text-transform:uppercase}
-@media(max-width:700px){.detail-hero{grid-template-columns:1fr}.detail-hero>img{min-height:240px;max-height:320px}.detail-intro h1{font-size:2rem}.detail-lists{grid-template-columns:1fr;gap:24px}}
+.menu-toggle{display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;width:44px;height:44px;padding:8px;border:1px solid rgba(255,255,255,.45);border-radius:8px;background:transparent;color:#fff;cursor:pointer}
+.menu-toggle span{display:block;width:24px;height:2px;border-radius:2px;background:currentColor}
+@media(max-width:800px){
+  header{position:sticky;flex-wrap:wrap;padding:10px 5%}
+  .logo{font-size:clamp(1rem,4vw,1.4rem);letter-spacing:1px}
+  .logo span{font-size:1.8rem}
+  .menu-toggle{display:flex}
+  header nav{display:none;flex:0 0 100%;padding:8px 0 4px}
+  header nav.open{display:flex;flex-direction:column;gap:2px}
+  header nav a{margin:0;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.15)}
+  header nav a.active{border-bottom:1px solid var(--gold)}
+  .hero{height:72svh;min-height:430px;padding:0 7%}
+  .hero h1{font-size:clamp(2rem,8vw,3.3rem);line-height:1.15}
+  .hero h1 i{font-size:clamp(2.8rem,12vw,4rem)}
+  .hero p{font-size:1rem}
+  .section{padding:44px 6%}
+  .section-title{font-size:clamp(1.8rem,7vw,2.4rem)}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px}
+  .detail-page{padding:20px 5% 44px}
+  #map{height:360px}
+  .filters{display:flex;flex-wrap:wrap;justify-content:center}
+  .filters button{margin:3px;padding:8px 12px}
+  #home .section>div{grid-template-columns:1fr!important;gap:24px!important}
+  #contact>div[style*="grid-template-columns"]{grid-template-columns:1fr!important}
+}
+@media(max-width:700px){
+  .detail-hero{grid-template-columns:1fr}
+  .detail-hero>img{min-height:240px;max-height:320px}
+  .detail-intro h1{font-size:2rem}
+  .detail-lists{grid-template-columns:1fr;gap:24px}
+}
+@media(max-width:480px){
+  .hero{height:68svh;min-height:390px}
+  .section{padding:36px 5%}
+  #destinations,#activities,#stay,#contact{padding:38px 5%!important}
+  .detail-section{padding:28px 0}
+  .detail-section h2{font-size:1.55rem}
+  #map{height:300px}
+  footer{padding:20px 12px;font-size:.85rem}
+}
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo">NORTHERN <span>Circuit</span></div>
-  <nav>
+  <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-navigation" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="site-navigation">
     <a class="active" onclick="showPage('home',this)">Home</a>
     <a onclick="showPage('destinations',this)">Destinations</a>
     <a onclick="showPage('activities',this)">Activities</a>
@@ -130,7 +172,17 @@ footer{background:#0f1a12;color:#fff;text-align:center;padding:25px}
 <footer>© 2026 Northern Circuit | Mr kangwa</footer>
 
 <script>
+function toggleMenu(){
+  const nav=document.getElementById('site-navigation');
+  const button=document.querySelector('.menu-toggle');
+  const isOpen=nav.classList.toggle('open');
+  button.setAttribute('aria-expanded',String(isOpen));
+  button.setAttribute('aria-label',isOpen?'Close navigation menu':'Open navigation menu');
+}
 function showPage(id,el){
+  document.getElementById('site-navigation').classList.remove('open');
+  document.querySelector('.menu-toggle').setAttribute('aria-expanded','false');
+  document.querySelector('.menu-toggle').setAttribute('aria-label','Open navigation menu');
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelectorAll('header nav a').forEach(a=>a.classList.remove('active'));
