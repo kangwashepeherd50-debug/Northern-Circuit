@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NORTHERN CIRCUIT - Zambia's Hidden North</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Great+Vibes&family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+:root{--green:#0a4d2e;--gold:#f5b700;--light:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',Arial}
+body{background:var(--light);color:#162016;line-height:1.7}
+/* HEADER - FANCY LOGO */
+header{position:sticky;top:0;z-index:999;background:#0a4d2e;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 5%}
+.logo{font-family:'Cinzel Decorative',cursive;font-size:1.55rem;font-weight:900;letter-spacing:2.5px}
+.logo span{font-family:'Great Vibes',cursive;color:var(--gold);font-size:2.3rem;font-weight:400;margin-left:6px}
+header nav a{color:#fff;text-decoration:none;margin-left:16px;cursor:pointer;font-size:.9rem}
+header nav a.active{color:var(--gold);border-bottom:2px solid var(--gold)}
+/* HERO - FALLS IMAGE - NO GREY */
+.hero{position:relative;height:90vh;overflow:hidden;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.2)), url('images 1/lumangwe-falls.jpeg') center/cover no-repeat;display:flex;align-items:center;padding:0 6%;color:white}
+.hero h1 i{font-family:'Great Vibes',cursive;color:var(--gold);font-size:4rem;font-style:normal;font-weight:400}
+.hero h1 b{color:var(--gold)}
+.hero p{max-width:520px;margin:18px 0 28px;font-size:1.1rem;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.btn{background:var(--gold);color:#000;padding:13px 28px;border-radius:30px;font-weight:800;border:none;cursor:pointer;display:inline-block;text-decoration:none}
+.page{display:none;max-width:1250px;margin:auto}
+.page.active{display:block}
+.section{padding:70px 5%}
+.section-title{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--green);text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:25px}
+.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.card img{width:100%;height:200px;object-fit:cover}.card-body{padding:16px}
+#map{height:450px;border-radius:16px} input,select,textarea{width:100%;padding:11px;border-radius:8px;border:1px solid #ccc;margin:8px 0 14px}
+footer{background:#0f1a12;color:#fff;text-align:center;padding:25px}
+.filters{text-align:center;margin:15px 0}.filters button{margin:4px;padding:8px 16px;border-radius:20px;border:1px solid var(--green);background:#fff;cursor:pointer}
+.filters button.active{background:var(--green);color:#fff}
+.destination-card{width:100%;padding:0;border:0;text-align:left;color:inherit;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.destination-card:hover,.destination-card:focus-visible{transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,0,0,.15);outline:2px solid var(--gold);outline-offset:2px}
+.destination-card img{display:block}
+.detail-page{padding:28px 5% 64px}
+.back-button{border:0;background:none;color:var(--green);font:600 1rem 'Montserrat',Arial;cursor:pointer;padding:8px 0;margin-bottom:18px}
+.detail-hero{display:grid;grid-template-columns:1.1fr 1fr;min-height:340px;background:#f4f7f3;align-items:stretch}
+.detail-hero>img{width:100%;height:100%;min-height:340px;max-height:480px;object-fit:cover}
+.detail-intro{padding:clamp(22px,4vw,48px);align-self:center}
+.detail-intro h1{font:700 2.4rem 'Playfair Display',serif;color:var(--green);line-height:1.2}
+.detail-intro p{margin-top:12px}
+.detail-location{color:#526255;font-weight:600}
+.detail-section{padding:38px 0;border-bottom:1px solid #dce5dc}
+.detail-section h2{font:700 1.8rem 'Playfair Display',serif;color:var(--green);margin-bottom:12px}
+.detail-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px}
+.detail-gallery figure{margin:0;min-width:0}
+.detail-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.detail-gallery figcaption{margin-top:6px;color:#526255;font-size:.75rem;line-height:1.4}
+.detail-gallery figcaption a{color:var(--green)}
+.image-credit{display:block;margin-top:6px;color:#526255;font-size:.72rem;line-height:1.4}
+.image-credit a{color:var(--green)}
+.detail-lists{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.detail-lists ul{padding-left:20px}
+.activity-card img{height:220px}
+.activity-meta{color:#526255;font-size:.88rem;margin-top:8px}
+.activity-category{color:var(--green);font-weight:600;font-size:.78rem;text-transform:uppercase}
+@media(max-width:700px){.detail-hero{grid-template-columns:1fr}.detail-hero>img{min-height:240px;max-height:320px}.detail-intro h1{font-size:2rem}.detail-lists{grid-template-columns:1fr;gap:24px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NORTHERN <span>Circuit</span></div>
+  <nav>
+    <a class="active" onclick="showPage('home',this)">Home</a>
+    <a onclick="showPage('destinations',this)">Destinations</a>
+    <a onclick="showPage('activities',this)">Activities</a>
+    <a onclick="showPage('stay',this)">Where to Stay</a>
+    <a onclick="showPage('contact',this)">Inquire</a>
+  </nav>
+</header>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active" style="max-width:100%;padding:0">
+
+  <!-- 1. IMAGE AREA WITH FALLS - NO GREY -->
+  <div class="hero" style="background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.2)), url('images 1/lumangwe-falls.jpeg') center/cover no-repeat;">
+    <div>
+      <h1>Zambia's <i>Hidden</i> <b>North</b> is Calling</h1>
+      <p>Northern, Luapula, Muchinga & Central - 17 waterfalls, Lake Tanganyika, 10M bats at Kasanka.</p>
+      <a class="btn" onclick="showPage('destinations',document.querySelectorAll('nav a')[1])">Explore Destinations</a>
+    </div>
+  </div>
+
+  <!-- 2. HISTORY APPEARS RIGHT AFTER IMAGE -->
+  <div class="section" style="background:#fefefe">
+    <div style="max-width:1100px;margin:auto;display:grid;grid-template-columns:1.2fr 1fr;gap:35px;align-items:center">
+      <div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;color:#0a4d2e">A Land of History & Mystery</h2>
+        <p style="margin-top:12px;color:#333">
+          Before Livingstone, the North was the heart of the <b>Bemba Kingdom</b> - Zambia's largest kingdom, ruled from Mungwi since the 1400s. Arab-Swahili traders crossed Lake Tanganyika for ivory, leaving Swahili words still used today.
+          <br><br>
+          In <b>1873, Dr. David Livingstone died in Chief Chitambo's village</b> (Central Province). His heart was buried under a Mvula tree - now the Livingstone Memorial, a sacred site you can visit.
+          <br><br>
+          The British left <b>Shiwa Ngandu</b> - Africa's famous English manor built in the bush by Sir Stewart Gore-Browne in 1914 - and <b>Mwela Rock Paintings</b> with 700+ ancient arts, older than the pyramids.
+          <br><br>
+          For decades the North was forgotten. Its waterfalls like <b>Kalambo (221m, 250,000 years old - older than Victoria Falls)</b> and parks stayed wild. Now we reopen it.
+        </p>
+        <div style="margin-top:18px;display:flex;gap:20px">
+          <div><b style="color:#0a4d2e;font-size:1.4rem">1400s</b><br><small>Bemba Kingdom</small></div>
+          <div><b style="color:#0a4d2e;font-size:1.4rem">1873</b><br><small>Livingstone Dies</small></div>
+          <div><b style="color:#0a4d2e;font-size:1.4rem">1914</b><br><small>Shiwa House</small></div>
+        </div>
+      </div>
+      <div>
+        <img src="images 1/livingstone-memorial.jpeg" alt="Livingstone Memorial" style="width:100%;border-radius:16px">
+        <img src="images 1/kalambo-falls.jpeg" alt="Kalambo Falls" style="width:100%;border-radius:16px">
+        <div style="margin-top:12px;background:#0a4d2e;color:#fff;padding:14px 18px;border-radius:12px">
+          <small>Did you know?</small><br><b style="color:#f5b700">Kalambo Falls has Stone Age tools from 250,000 years ago - one of the oldest human settlements in Africa.</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OTHER PAGES -->
+<div id="destinations" class="page" style="padding:60px 5%"><h2 class="section-title">Destinations</h2><div class="filters"><button class="active" onclick="filterDest('all',this)">All</button><button onclick="filterDest('waterfall',this)">Waterfalls</button><button onclick="filterDest('wildlife',this)">Wildlife</button><button onclick="filterDest('lake',this)">Lakes</button></div><div class="grid" id="destGrid"></div></div>
+
+<div id="destination-detail" class="page detail-page"></div>
+
+<div id="activities" class="page" style="padding:60px 5%"><h2 class="section-title">Activities</h2><div class="filters activity-filters"><button class="active" onclick="filterActivities('all',this)">All</button><button onclick="filterActivities('waterfall',this)">Waterfalls</button><button onclick="filterActivities('wildlife',this)">Wildlife</button><button onclick="filterActivities('water',this)">On the water</button><button onclick="filterActivities('wellness',this)">Wellness</button></div><div class="grid" id="activityGrid"></div></div>
+
+<div id="stay" class="page" style="padding:60px 5%"><h2 class="section-title">Where to Stay</h2><div class="grid"><div class="card"><img src="images 1/kapisha-hot-springs.jpeg" alt="Kapishya Hot Springs Lodge"><div class="card-body"><h3>Kapishya Hot Springs Lodge</h3><p>K1800 chalet, K250 camping</p></div></div><div class="card"><img src="images 1/wasa-lodge.jpeg" alt="Wasa Lodge Kasanka"><div class="card-body"><h3>Wasa Lodge Kasanka</h3><p>K2500/night treehouse</p></div></div><div class="card"><img src="images 1/ndole-bay.jpeg" alt="Ndole Bay Lodge"><div class="card-body"><h3>Ndole Bay Lodge</h3><p>Lake Tanganyika K1500-3000</p></div></div><div class="card"><img src="images 1/urban.jpeg" onerror="this.onerror=null;this.src='images 1/wasa-lodge.jpeg'" alt="Representative hotel photo for Urban Hotel"><div class="card-body"><h3>Urban Hotel</h3><p>Contact the hotel for its current location, rates, and amenities.</p><small>Representative photo</small></div></div><div class="card"><img src="images 1/kosha lodge.jpeg" onerror="this.onerror=null;this.src='images 1/ndole-bay.jpeg'" alt="Representative hotel photo for Kosha"><div class="card-body"><h3>Kosha</h3><p>Contact the property for its current location, rates, and amenities.</p><small>Representative photo</small></div></div><div class="card"><img src="images 1/kalambo falls lodge.jpeg" alt="Kalambo Falls Lodge"><div class="card-body"><h3>Kalambo Falls Lodge</h3><p>Contact the lodge for current rates, amenities, and booking details.</p></div></div></div></div>
+
+<div id="contact" class="page" style="padding:60px 5%"><h2 class="section-title"> Enquire</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px"><form class="card" onsubmit="send(event)"><div class="card-body"><h3>Contact Local Guides</h3><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required><label for="interest">What are you interested in?</label><select id="interest" name="interest"><option>Waterfalls Tour 5 Days</option><option>Kasanka Bat Migration</option><option>Lake Tanganyika</option><option>Bangweulu Mokoro Canoe</option></select><label for="msg">Dates, group size, or questions</label><textarea id="msg" name="message" rows="4" placeholder="Add your travel dates, number of people, or questions"></textarea><button class="btn" type="submit" style="width:100%">Send via WhatsApp</button><p id="ok" role="status" style="color:green"></p></div></form></div></div>
+
+<footer>© 2026 Northern Circuit | Mr kangwa</footer>
+
+<script>
+function showPage(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('header nav a').forEach(a=>a.classList.remove('active'));
+  if(el)el.classList.add('active');window.scrollTo(0,0);
+  if(id==='contact'){setTimeout(()=>{map.invalidateSize();map.fitBounds(destinationMarkers.getBounds(),{padding:[24,24],maxZoom:5,animate:false})},300)}
+}
+const places=[
+ {id:"kalambo",name:"Kalambo Falls 221m",cat:"waterfall",prov:"Northern",img:"images 1/kalambo-falls.jpeg",gallery:["images 1/kalambo-falls.JPEG.jpeg"],desc:"2nd tallest in Africa, Tanzania border.",location:"Mbala District, Northern Province, near the Tanzania border.",history:"The Kalambo River drops over a high escarpment at the Zambia–Tanzania border before cutting through the deep Kalambo Gorge toward Lake Tanganyika. The gorge is also one of Africa's major archaeological sites: excavations begun by J. Desmond Clark in 1953 uncovered evidence of repeated human occupation over hundreds of thousands of years. In 2023, researchers reported worked wooden pieces from the site dated to about 476,000 years ago, evidence that early people shaped wood into a structure. This discovery made Kalambo important not only as a waterfall, but as a record of early technology and human life.",activities:["View the falls and gorge from the designated viewpoints","Walk nearby trails with a local guide","Photography, birdwatching and archaeology-focused visits"],stays:["Guesthouses and lodges in Mbala","Check locally for camping or community-run accommodation near the falls"]},
+ {id:"lumangwe",name:"Lumangwe Falls",cat:"waterfall",prov:"Luapula",img:"images 1/lumangwe-falls2.jpg.jpeg",gallery:["images 1/lumangwe-falls.jpeg","images 1/lumangwe.jpeg"],desc:"Largest falls fully in Zambia - 500 visitors/mo.",location:"Kawambwa District, Luapula Province, on the Kalungwishi River.",history:"Lumangwe is a broad block waterfall on the Kalungwishi River, within the Lumangwe–Kabwelume–Chimpepe falls complex. For generations, the area held spiritual importance for local communities and chiefs. Historical accounts describe the falls as a sacred place where chiefs paid homage to ancestors; public access was developed after local agreements in the 1990s. The name recalls Lumangwe, a serpent spirit in local tradition, said to link Lumangwe Falls with Kabwelume downstream. The stories remain part of the way the landscape is understood, alongside its natural and geological history.",activities:["Walk to the falls viewpoints","Enjoy guided nature walks and photography","Visit in the dry season for easier access; confirm swimming safety locally"],stays:["Guesthouses in Kawambwa","Ask local tourism offices about campsites and nearby community accommodation"]},
+ {id:"chishimba",name:"Chishimba Falls",cat:"waterfall",prov:"Northern",img:"images 1/chishimba-falls.jpeg",gallery:[{src:"https://upload.wikimedia.org/wikipedia/commons/d/df/Chishimba_Falls_-_Zambia.jpg",alt:"Chishimba Falls in Zambia's Northern Province",credit:"Emma Nawakwi",source:"https://commons.wikimedia.org/wiki/File:Chishimba_Falls_-_Zambia.jpg",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/"}],desc:"3-tier sacred falls with caves.",location:"About 40 km northwest of Kasama, Northern Province, along the Luombe River.",history:"Chishimba is a three-part waterfall system spread along roughly 300 metres of the Luombe River: Mutumuna Falls above, the Kayela Rapids in the middle, and the main Chishimba Falls below. Together the drops descend about 60 metres. The falls are recognized among Zambia's monuments and historic sites, and are also tied to local spiritual traditions; the caves and sacred areas should be treated with respect. The river's power later became part of the area's modern history too: a small hydroelectric station was first commissioned here in 1959 and expanded in 1971, supplying power while the falls remained a major natural landmark.",activities:["Follow the signed paths between the cascades","View the falls and caves with a local guide","Picnicking and photography in designated areas"],stays:["Hotels and guesthouses in Kasama","Arrange transport and a day visit through a local guide"]},
+ {id:"tanganyika",name:"Lake Tanganyika",cat:"lake",prov:"Northern",img:"images 1/laka-tanganyika.jpeg",gallery:["images 1/ty2.jpeg","images 1/tanganyika what to do.jpeg","images 1/snorklel-tanganyika.jpeg"],desc:"World's 2nd deepest lake.",location:"Mpulungu, Northern Province, at Zambia's northern lakeshore.",history:"Lake Tanganyika is an ancient rift lake whose central basin began forming millions of years ago. For a very long time, communities around its shores have relied on the lake for food, transport, and exchange. In the mid-19th century, caravan trade routes connected the interior to lakeside settlements, and in 1858 British explorers Richard Burton and John Speke reached the lake while searching for the source of the Nile. David Livingstone later travelled along parts of its shore; his 1871 meeting with Henry Morton Stanley took place at Ujiji on the eastern shore. Today Mpulungu remains Zambia's lakeside port, linking local fishing and trade traditions with the wider lake region.",activities:["Boat trips and lakeshore sightseeing","Swimming, snorkeling and fishing with local operators","Visit Mpulungu's waterfront and local markets"],stays:["Ndole Bay Lodge and other lakeshore lodges","Guesthouses in Mpulungu"]},
+ {id:"kasanka",name:"Kasanka NP - 10M Bats",cat:"wildlife",prov:"Central",img:"images 1/kasanka-bats.jpeg",gallery:["images 1/kasanka-wildlife-53.jpeg","images 1/kasanka-bats.jpeg"],desc:"Largest mammal migration Oct-Dec.",location:"Serenje District, Central Province, within Kasanka National Park.",history:"Kasanka protects a compact but varied landscape of miombo woodland, evergreen swamp forest, rivers, lakes, and wetlands. After visiting the then little-developed park in 1985, conservationist David Lloyd helped establish the Kasanka Trust in 1987. The Trust later became responsible for park infrastructure and habitat management in partnership with Zambia's national parks authority, making Kasanka an early example of public–private park management in the country. Its most famous seasonal event is the arrival of straw-coloured fruit bats in the Mushitu forest each October; numbers build through November and the migration usually lasts into December, drawing visitors from across the world.",activities:["Seasonal bat migration viewing, usually October to December","Guided game drives and walking safaris","Birdwatching and visits to the park's wetlands"],stays:["Wasa Lodge in Kasanka National Park","Book campsites and seasonal bat-viewing access well in advance"]},
+ {id:"kapishya",name:"Kapishya Hot Springs",cat:"lake",prov:"Muchinga",img:"images 1/kapisha-hot-springs.jpeg",gallery:[{src:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/HouseatShiwaNgandu.jpg/960px-HouseatShiwaNgandu.jpg",alt:"Historic main house on the Shiwa Ng'andu estate",credit:"Marcus Rozbitsky",source:"https://commons.wikimedia.org/wiki/File:HouseatShiwaNgandu.jpg",license:"CC BY 2.0",licenseUrl:"https://creativecommons.org/licenses/by/2.0/"}],desc:"40°C natural hot spring.",location:"Shiwa Ng'andu estate, Muchinga Province, beside the Mansha River.",history:"Kapishya Hot Springs sit beside the Mansha River on the Shiwa Ng'andu estate. The spring is a natural feature of the valley; its warm water became part of the estate's visitor life as Shiwa Ng'andu developed in the early 20th century. The estate was established by Sir Stewart Gore-Browne, who began building his country house there in 1914. Its manor and gardens reflect that unusual chapter of Zambia's colonial-era history, while the surrounding river valley and hot spring remain the draw for many visitors today. The two sites are closely linked geographically, but the hot spring itself is a separate natural attraction within the estate.",activities:["Soak in the natural hot spring","Walk along the river and explore the surrounding estate","Relax, birdwatch and enjoy the natural setting"],stays:["Kapishya Hot Springs Lodge","Contact the lodge ahead for room availability, camping and access details"]},
+];
+places.push(
+ {id:"kabwelume",name:"Kabwelume Falls",cat:"waterfall",prov:"Northern",img:"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/KABWELUME_FALLS%2C_MPOROKOSO%2C_ZAMBIA_02.jpg/960px-KABWELUME_FALLS%2C_MPOROKOSO%2C_ZAMBIA_02.jpg",imageCredit:{credit:"Chumat28",source:"https://commons.wikimedia.org/wiki/File:KABWELUME_FALLS,_MPOROKOSO,_ZAMBIA_02.jpg",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0"},gallery:[{src:"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/KABWELUME_FALLS%2C_MPOROKOSO%2C_ZAMBIA.jpg/960px-KABWELUME_FALLS%2C_MPOROKOSO%2C_ZAMBIA.jpg",alt:"Kabwelume Falls on the Kalungwishi River",credit:"Chumat28",source:"https://commons.wikimedia.org/wiki/File:KABWELUME_FALLS,_MPOROKOSO,_ZAMBIA.jpg",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0"}],desc:"A broad waterfall on the Kalungwishi River, downstream from Lumangwe.",location:"Mporokoso District, Northern Province, about 6 km downstream from Lumangwe Falls.",history:"Kabwelume Falls is part of the Kalungwishi River waterfall landscape that also includes Lumangwe. The river runs north through Northern Province toward Lake Mweru, and at Kabwelume it spreads over a curved rock edge into the gorge. The falls are closely connected to Lumangwe in both geography and local stories: Kabwelume is only a short distance downstream, and the names are associated in accounts of the Lumangwe serpent spirit. Seasonal river levels change the appearance of the cascade, with especially strong flow after the rainy season.",activities:["View the falls from suitable riverbank viewpoints","Explore the nearby Lumangwe falls area","Take photographs and walk with a local guide"],stays:["Guesthouses in Mporokoso or Kawambwa","Confirm nearby camping and road conditions locally"]},
+ {id:"ntumbachushi",name:"Ntumbachushi Falls",cat:"waterfall",prov:"Luapula",img:"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Ntumbachushi_Falls.jpg/960px-Ntumbachushi_Falls.jpg",imageCredit:{credit:"Stephen Chabala",source:"https://commons.wikimedia.org/wiki/File:Ntumbachushi_Falls.jpg",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/"},gallery:[{src:"https://upload.wikimedia.org/wikipedia/commons/c/cc/The_Ntumbachushi_Falls.jpg",alt:"A second view of Ntumbachushi Falls",credit:"Revention24",source:"https://commons.wikimedia.org/wiki/File:The_Ntumbachushi_Falls.jpg",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/"}],desc:"Twin cascades and pools on the Ngona River.",location:"Luapula Province, on the Ngona River near the Kawambwa–Mbereshi road.",history:"Ntumbachushi Falls lies where the Ngona River leaves the northern plateau and descends toward the Luapula River valley. The main cascade divides into two parallel falls, with additional pools and smaller cascades above and below. Spray supports a small patch of relict rainforest in the surrounding landscape. The falls also hold cultural importance: local shrines near the main cascade are used by traditional leaders and healers, so visitors should follow local guidance and treat the site respectfully.",activities:["Walk to the main cascades and pools","Enjoy nature walks and photography","Visit with a local guide and respect shrine areas"],stays:["Guesthouses in Kawambwa or Mbereshi","Check locally for access, guide, and camping arrangements"]},
+ {id:"mumbuluma",name:"Mumbuluma Falls",cat:"waterfall",prov:"Luapula",img:"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Mumbuluma_falls_-_lower_falls.jpg/960px-Mumbuluma_falls_-_lower_falls.jpg",imageCredit:{credit:"Isaacgerg",source:"https://commons.wikimedia.org/wiki/File:Mumbuluma_falls_-_lower_falls.jpg",license:"CC BY-SA 3.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/3.0"},gallery:[{src:"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Mumbuluma_falls_-_entrance_sign.jpg/960px-Mumbuluma_falls_-_entrance_sign.jpg",alt:"Entrance sign at Mumbuluma Falls",credit:"Isaacgerg",source:"https://commons.wikimedia.org/wiki/File:Mumbuluma_falls_-_entrance_sign.jpg",license:"CC BY 3.0",licenseUrl:"https://creativecommons.org/licenses/by/3.0"}],desc:"Two successive waterfalls just outside Mansa.",location:"Near Mansa, Luapula Province.",history:"Mumbuluma Falls consists of two successive cascades, commonly described as the upper and lower falls. Located just outside Mansa, the site is recognized as a national monument of Zambia. Its short distance from town has made it a familiar local natural landmark, while the entrance sign and paths reflect its established role as a visitor site. The waterfall and surrounding landscape are part of Luapula's wider network of river and falls attractions.",activities:["Visit the upper and lower falls","Walk the site paths and enjoy the river scenery","Photography and a short nature outing from Mansa"],stays:["Hotels and guesthouses in Mansa","Arrange local transport and check site access before visiting"]},
+ {id:"lavushi-manda",name:"Lavushi Manda National Park",cat:"wildlife",prov:"Muchinga",img:"https://upload.wikimedia.org/wikipedia/commons/2/22/Peliperdix_coqui_%28A.Smith%2C_1836%29_-_in_Lavushi_Manda_National_Park%2C_Zambia_by_Christiaan_van_der_Hoeven.jpg",imageCredit:{credit:"Christiaan van der Hoeven",source:"https://commons.wikimedia.org/wiki/File:Peliperdix_coqui_(A.Smith,_1836)_-_in_Lavushi_Manda_National_Park,_Zambia_by_Christiaan_van_der_Hoeven.jpg",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/"},gallery:[{src:"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Clarias_stappersii_Boulenger%2C_1915_collected_in_Lavushi_Manda_National_Park%2C_Zambia_by_the_South_African_Institute_for_Aquatic_Biodiversity.jpg/960px-Clarias_stappersii_Boulenger%2C_1915_collected_in_Lavushi_Manda_National_Park%2C_Zambia_by_the_South_African_Institute_for_Aquatic_Biodiversity.jpg",alt:"Fish documented from a woodland stream in Lavushi Manda National Park",credit:"South African Institute for Aquatic Biodiversity",source:"https://commons.wikimedia.org/wiki/File:Clarias_stappersii_Boulenger,_1915_collected_in_Lavushi_Manda_National_Park,_Zambia_by_the_South_African_Institute_for_Aquatic_Biodiversity.jpg",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/"}],desc:"A northern Zambia park of mountains, miombo woodland, streams, and wetlands.",location:"Lavushimanda District, Muchinga Province, between the Muchinga Escarpment and Bangweulu floodplain.",history:"Lavushi Manda was declared a national park in 1972. Its landscape includes the Lavushi Mountains, miombo woodland, seasonally wet grasslands, and river valleys draining toward the Bangweulu basin. After years of limited resources and heavy poaching, conservation support and park infrastructure were strengthened from 2011 through cooperation involving the Kasanka Trust and the Department of National Parks and Wildlife. Management returned to the Department in 2017. Today the park is valued for its rugged uplands, birdlife, streams, and opportunities for hiking and nature-focused visits.",activities:["Hike in the Lavushi Mountains with careful route planning","Birdwatch in miombo woodland and river habitats","Explore streams and waterfalls with local or park guidance"],stays:["Use designated park campsites where open","Check current access, camping, and park fees with DNPW before travel"]}
+);
+const activityOptions=[
+ {title:"Waterfall viewpoints",category:"waterfall",image:"images 1/kalambo-falls.jpeg",location:"Kalambo Falls · Mbala District",season:"Best in the dry season",description:"Take in the falls and gorge from the designated viewpoints, with a local guide for nearby trails."},
+ {title:"Swim in falls pools",category:"waterfall",image:"images 1/lumangwe-falls.jpeg",location:"Lumangwe Falls · Kawambwa District",season:"June to September; confirm conditions locally",description:"Enjoy the river scenery and only swim where local guidance confirms it is safe."},
+ {title:"Falls walks and caves",category:"waterfall",image:"images 1/chishimba-falls.jpeg",location:"Chishimba Falls · near Kasama",season:"Check access and trail conditions locally",description:"Explore the cascades and nearby caves on the marked paths, respecting site guidance."},
+ {title:"Bat migration safari",category:"wildlife",image:"images 1/kasanka-bats.jpeg",location:"Kasanka National Park · Serenje District",season:"October to December",description:"Watch the seasonal fruit-bat gathering with park-approved guides and viewing arrangements."},
+ {title:"Lake boat trips and snorkeling",category:"water",image:"images 1/snorklel-tanganyika.jpeg",location:"Lake Tanganyika · Mpulungu",season:"Check lake conditions with local operators",description:"Explore the lakeshore or arrange a boat trip, snorkeling, or fishing with a local operator."},
+ {title:"Hot-spring soak",category:"wellness",image:"images 1/kapisha-hot-springs.jpeg",location:"Kapishya · Shiwa Ng'andu",season:"Available year-round; confirm access ahead",description:"Unwind in the natural spring beside the Mansha River and explore the surrounding grounds."},
+ {title:"Mokoro canoe and shoebill search",category:"wildlife",image:"images 1/lubombwe.jpeg",location:"Bangweulu Wetlands",season:"Ask local guides about seasonal access",description:"Explore the wetlands by canoe with a local guide, with a chance to look for the shoebill. Shoebill Camp is a nearby stay option."},
+];
+function render(list){
+  const g=document.getElementById('destGrid');g.innerHTML='';
+  list.forEach(p=>{g.innerHTML+=`<button type="button" class="card destination-card" onclick="openPlace('${p.id}')" aria-label="View details for ${p.name}"><img src="${p.img}" alt="${p.name}"><div class="card-body"><h3>${p.name}</h3><p>${p.desc}</p>${p.imageCredit?`<small class="image-credit">${imageCreditMarkup(p.imageCredit)}</small>`:''}</div></button>`})
+}
+function imageCreditMarkup(image){
+  return `Photo: ${image.credit} · <a href="${image.source}" target="_blank" rel="noopener">Source</a> · <a href="${image.licenseUrl}" target="_blank" rel="noopener">${image.license}</a>`;
+}
+function renderActivities(list){
+  const grid=document.getElementById('activityGrid');
+  grid.innerHTML=list.map(activity=>`<article class="card activity-card"><img src="${activity.image}" alt="${activity.title}"><div class="card-body"><p class="activity-category">${activity.category}</p><h3>${activity.title}</h3><p>${activity.description}</p><p class="activity-meta"><b>Location:</b> ${activity.location}</p><p class="activity-meta"><b>Best time:</b> ${activity.season}</p></div></article>`).join('');
+}
+function filterActivities(category,button){
+  document.querySelectorAll('.activity-filters button').forEach(item=>item.classList.remove('active'));
+  button.classList.add('active');
+  renderActivities(category==='all'?activityOptions:activityOptions.filter(activity=>activity.category===category));
+}
+function openPlace(id){
+  const p=places.find(place=>place.id===id);
+  if(!p)return;
+  const detail=document.getElementById('destination-detail');
+  detail.innerHTML=`<button type="button" class="back-button" onclick="showPage('destinations',document.querySelector('header nav a:nth-child(2)'))">&larr; Back to destinations</button>
+    <section class="detail-hero"><img src="${p.img}" alt="${p.name}"><div class="detail-intro"><p class="detail-location">${p.location}</p><h1>${p.name}</h1><p>${p.desc}</p>${p.imageCredit?`<small class="image-credit">${imageCreditMarkup(p.imageCredit)}</small>`:''}</div></section>
+    <section class="detail-section"><h2>A Brief History</h2><p>${p.history}</p>${p.gallery.length?`<div class="detail-gallery">${p.gallery.map((entry,index)=>{const image=typeof entry==='string'?{src:entry,alt:`${p.name} view ${index+1}`} : entry;return `<figure><img src="${image.src}" alt="${image.alt}" loading="lazy">${image.credit?`<figcaption>${imageCreditMarkup(image)}</figcaption>`:''}</figure>`}).join('')}</div>`:''}</section>
+    <section class="detail-section detail-lists"><div><h2>Things to Do</h2><ul>${p.activities.map(activity=>`<li>${activity}</li>`).join('')}</ul></div><div><h2>Where to Stay</h2><ul>${p.stays.map(stay=>`<li>${stay}</li>`).join('')}</ul></div></section>`;
+  showPage('destination-detail',document.querySelector('header nav a:nth-child(2)'));
+}
+function filterDest(cat,btn){
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  if(cat==='all') render(places); else render(places.filter(p=>p.cat===cat));
+}
+render(places);
+renderActivities(activityOptions);
+var map=L.map('map').setView([-10.5,30.5],6.5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+const mapPlaces=[
+  {name:"Kalambo Falls 221m",area:"Mbala District, Northern Province",coordinates:[-8.5974,31.2396]},
+  {name:"Lumangwe Falls",area:"Kalungwishi River, Luapula Province",coordinates:[-9.5333,29.3833]},
+  {name:"Chishimba Falls",area:"Near Kasama, Northern Province",coordinates:[-10.1083,30.9175]},
+  {name:"Lake Tanganyika",area:"Mpulungu, Northern Province",coordinates:[-8.7667,31.1167]},
+  {name:"Kasanka National Park",area:"Serenje District, Central Province",coordinates:[-12.5667,30.2]},
+  {name:"Kapishya Hot Springs",area:"Shiwa Ng'andu, Muchinga Province",coordinates:[-11.2,31.75]},
+  {name:"Kabwelume Falls",area:"Mporokoso District, Northern Province",coordinates:[-9.56,29.35]},
+  {name:"Ntumbachushi Falls",area:"Luapula Province",coordinates:[-9.8539,28.9442]},
+  {name:"Mumbuluma Falls",area:"Near Mansa, Luapula Province",coordinates:[-10.93,28.7367]},
+  {name:"Lavushi Manda National Park",area:"Lavushimanda District, Muchinga Province",coordinates:[-12.3167,30.85]}
+];
+const destinationMarkers=L.featureGroup(mapPlaces.map(place=>L.marker(place.coordinates).bindPopup(`<strong>${place.name}</strong><br>${place.area}`))).addTo(map);
+function send(event){
+  event.preventDefault();
+  const name=document.getElementById('name').value.trim();
+  const interest=document.getElementById('interest').value;
+  const details=document.getElementById('msg').value.trim();
+  const message=[`Hello, I am ${name}.`,`I am interested in: ${interest}.`,details?`Travel dates, group size, or questions: ${details}`:""]
+    .filter(Boolean).join("\n");
+  window.open(`https://wa.me/260970000000?text=${encodeURIComponent(message)}`,'_blank');
+  document.getElementById('ok').textContent='Your enquiry is ready to send in WhatsApp.';
+}
+</script>
+</body>
+</html>
